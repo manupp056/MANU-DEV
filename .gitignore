@@ -1,0 +1,35 @@
+# Dependencias, compilaciones y caches
+node_modules/
+dist/
+.astro/
+.cache/
+
+# Secretos y configuraciones personales
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*
+credenciales*
+secrets*
+secret*
+password*
+contrase*
+tokens*
+*.secret
+
+# Archivos locales del sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/*.log
+
+# Archivos privados: guardar en carpeta fuera del repositorio si es posible
+privado/
+private/
+
+# Entrada local sin revisión: nunca subir a GitHub
+/compartido/
+.env
+.env.*
+!.env.example

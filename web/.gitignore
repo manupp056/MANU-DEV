@@ -1,0 +1,24 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# Fichas copiadas durante el build desde contenido/actividades/
+src/content/docs/actividades/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
