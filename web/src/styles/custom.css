@@ -49,6 +49,20 @@ header.header {
 .manu-status strong { color: var(--manu-text); }
 .manu-status p { margin: 0.25rem 0 0; color: var(--manu-muted); font-size: 0.9rem; }
 
+.manu-module { margin: 2rem 0 3rem; }
+.manu-unit { margin: 1.5rem 0 2.25rem; }
+.manu-unit > h3 { padding-bottom: 0.55rem; border-bottom: 1px solid rgba(181, 206, 196, 0.16); }
+.manu-lesson { margin: 1.25rem 0 2rem; }
+.manu-lesson > h4 { color: var(--manu-peach); font-size: 0.95rem; letter-spacing: 0.02em; }
+.manu-activity-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0.9rem; }
+.manu-activity { padding: 1.15rem 1.2rem; border: 1px solid rgba(181, 206, 196, 0.14); border-radius: 0.9rem; background: linear-gradient(145deg, rgba(25, 51, 46, 0.94), rgba(25, 51, 46, 0.55)); }
+.manu-activity__meta { display: flex; justify-content: space-between; gap: 0.8rem; color: var(--manu-muted); font-family: monospace; font-size: 0.72rem; text-transform: uppercase; }
+.manu-activity__status { color: var(--manu-mint); }
+.manu-activity h4 { margin: 0.7rem 0 0.4rem; font-size: 1.08rem; }
+.manu-activity h4 a { color: var(--manu-text); text-decoration-color: rgba(118, 223, 182, 0.42); text-underline-offset: 0.18em; }
+.manu-activity p { color: var(--manu-muted); font-size: 0.9rem; line-height: 1.55; }
+.manu-activity__version, .manu-activity__note { margin-bottom: 0; font-size: 0.78rem !important; }
+
 @media (max-width: 720px) {
 	:root { --sl-text-h1: 2.5rem; }
 	.manu-dashboard { grid-template-columns: 1fr; }

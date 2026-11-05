@@ -6,6 +6,9 @@ import { docsSchema } from '@astrojs/starlight/schema';
 export const collections = {
 	docs: defineCollection({ loader: docsLoader(), schema: docsSchema({ extend: z.object({
 		codigo: z.string().optional(),
+		modulo: z.string().optional(),
+		unidad: z.string().optional(),
+		leccion: z.string().optional(),
 		estado: z.string().optional(),
 		fecha: z.union([z.string(), z.date().transform((date) => date.toISOString().slice(0, 10))]).optional(),
 		version_entrega: z.string().optional(),

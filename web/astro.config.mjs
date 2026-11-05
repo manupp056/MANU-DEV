@@ -12,7 +12,7 @@ export default defineConfig({
 			defaultLocale: 'root',
 			locales: { root: { label: 'Español', lang: 'es' } },
 			description: 'Mi laboratorio de Programación con IA.',
-			favicon: '/MANU-DEV/favicon.svg',
+			favicon: '/favicon.svg',
 			customCss: ['./src/styles/custom.css'],
 			sidebar: [
 				{ label: 'Inicio', link: '/' },

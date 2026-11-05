@@ -45,7 +45,7 @@ Las versiones del **sitio** son distintas de las versiones de una **entrega** (`
 
 ## Situación actual
 
-La web está implementada en `web/`. El flujo de GitHub Pages se ejecuta manualmente. Las actividades se incorporan desde `contenido/actividades/`.
+La web está implementada en `web/`. GitHub Actions compila y publica GitHub Pages al actualizar la rama `main`. Las fichas publicables se incorporan desde `contenido/actividades/`; los originales no aptos para publicación se conservan fuera del sitio.
 
 ## Privacidad
 
@@ -57,4 +57,4 @@ Al usar GitHub Pages público, cualquier visitante puede ver los archivos public
 - `FLUJO_CODEX_GITHUB.md` explica cómo incorporar actividades y revisar cambios antes de hacer commits o publicar.
 - `.gitignore` excluye dependencias, secretos habituales y carpetas privadas, pero **no sustituye una revisión manual** de los archivos que se suben.
 - La carpeta local y el repositorio GitHub se sincronizan mediante Git; ChatGPT y Codex no disponen necesariamente de una carpeta compartida en tiempo real.
-- **Este paquete sigue siendo una base documental**, no una web Astro terminada ni un repositorio ya conectado a GitHub.
+- El sitio Astro + Starlight vive en `web/`; el flujo de GitHub Pages publica su compilación desde `main`.

@@ -1,46 +1,50 @@
 ---
 import { getCollection } from 'astro:content';
+import ActivityCard from './ActivityCard.astro';
 
 const { view } = Astro.props;
 const activities = (await getCollection('docs', ({ id }) => id.startsWith('actividades/')))
-  .filter(({ data }) => !data.draft && (view !== 'entregas' || data.archivos.length > 0))
-  .sort((a, b) => a.id.localeCompare(b.id, 'es', { numeric: true }));
+	.filter(({ data }) => !data.draft)
+	.sort((a, b) => a.id.localeCompare(b.id, 'es', { numeric: true }));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const units = [
-  ['M1U1', 'M1.1 · Alfabetización digital avanzada'],
-  ['M1U2', 'M1.2 · IA generativa y verificación de resultados'],
-  ['M1U3', 'M1.3 · Productividad y automatización básica'],
-  ['M1U4', 'M1.4 · Taller integrado y evaluación'],
-];
-const groups = view === 'formacion' ? [
-  ...units.map(([unit, label]) => ({
-    label,
-    entries: activities.filter(({ data }) => data.codigo?.toUpperCase().startsWith(unit + '-')),
-  })),
-  ...(activities.some(({ data }) => !units.some(([unit]) => data.codigo?.toUpperCase().startsWith(unit + '-')))
-    ? [{ label: 'Otras unidades', entries: activities.filter(({ data }) =>
-        !units.some(([unit]) => data.codigo?.toUpperCase().startsWith(unit + '-'))) }]
-    : []),
-] : [{ label: '', entries: activities }];
+const modules = new Map();
+for (const activity of activities) {
+	const moduleName = activity.data.modulo || 'Módulo sin asignar';
+	const unitName = activity.data.unidad || 'Unidad sin asignar';
+	const lessonName = activity.data.leccion || 'Lección no indicada en el informe';
+	if (!modules.has(moduleName)) modules.set(moduleName, new Map());
+	const units = modules.get(moduleName);
+	if (!units.has(unitName)) units.set(unitName, new Map());
+	const lessons = units.get(unitName);
+	if (!lessons.has(lessonName)) lessons.set(lessonName, []);
+	lessons.get(lessonName).push(activity);
+}
+const groups = [...modules].map(([module, units]) => ({
+	module,
+	units: [...units].map(([unit, lessons]) => ({
+		unit,
+		lessons: [...lessons].map(([lesson, entries]) => ({ lesson, entries })),
+	})),
+}));
+
 ---
-{groups.map(({ label, entries }) => (
-  <section>
-    {label && <h3>{label}</h3>}
-    {entries.length ? (
-      <ul>
-        {entries.map(({ id, data }) => (
-          <li>
-            <a href={`${base}/${id}/`}>{data.codigo && `${data.codigo} · `}{data.title}</a>
-            {view === 'entregas' && (
-              <ul>{data.archivos.map((file) => (
-                <li><a href={`${base}/entregables/${file.split('/').map(encodeURIComponent).join('/')}`}>{file.split('/').at(-1)}</a></li>
-              ))}</ul>
-            )}
-            {view === 'evolucion' && (data.fecha || data.estado || data.version_entrega) &&
-              <span> · {[data.fecha, data.estado, data.version_entrega].filter(Boolean).join(' · ')}</span>}
-          </li>
-        ))}
-      </ul>
-    ) : <p>Todavía no hay {view === 'entregas' ? 'archivos publicados' : 'fichas publicadas'}.</p>}
-  </section>
+
+{groups.map(({ module, units }) => (
+	<section class="manu-module">
+		<h2>{module}</h2>
+		{units.map(({ unit, lessons }) => (
+			<section class="manu-unit">
+				<h3>{unit}</h3>
+				{lessons.map(({ lesson, entries }) => (
+					<div class="manu-lesson">
+						<h4>{lesson}</h4>
+						<div class="manu-activity-list">
+							{entries.map((entry) => <ActivityCard entry={entry} base={base} view={view} />)}
+						</div>
+					</div>
+				))}
+			</section>
+		))}
+	</section>
 ))}
+{activities.length === 0 && <p>Todavía no hay actividades verificadas para publicar.</p>}
