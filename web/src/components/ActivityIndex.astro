@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+
+const { view } = Astro.props;
+const activities = (await getCollection('docs', ({ id }) => id.startsWith('actividades/')))
+  .filter(({ data }) => !data.draft && (view !== 'entregas' || data.archivos.length > 0))
+  .sort((a, b) => a.id.localeCompare(b.id, 'es', { numeric: true }));
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const units = [
+  ['M1U1', 'M1.1 · Alfabetización digital avanzada'],
+  ['M1U2', 'M1.2 · IA generativa y verificación de resultados'],
+  ['M1U3', 'M1.3 · Productividad y automatización básica'],
+  ['M1U4', 'M1.4 · Taller integrado y evaluación'],
+];
+const groups = view === 'formacion' ? [
+  ...units.map(([unit, label]) => ({
+    label,
+    entries: activities.filter(({ data }) => data.codigo?.toUpperCase().startsWith(unit + '-')),
+  })),
+  ...(activities.some(({ data }) => !units.some(([unit]) => data.codigo?.toUpperCase().startsWith(unit + '-')))
+    ? [{ label: 'Otras unidades', entries: activities.filter(({ data }) =>
+        !units.some(([unit]) => data.codigo?.toUpperCase().startsWith(unit + '-'))) }]
+    : []),
+] : [{ label: '', entries: activities }];
+---
+{groups.map(({ label, entries }) => (
+  <section>
+    {label && <h3>{label}</h3>}
+    {entries.length ? (
+      <ul>
+        {entries.map(({ id, data }) => (
+          <li>
+            <a href={`${base}/${id}/`}>{data.codigo && `${data.codigo} · `}{data.title}</a>
+            {view === 'entregas' && (
+              <ul>{data.archivos.map((file) => (
+                <li><a href={`${base}/entregables/${file.split('/').map(encodeURIComponent).join('/')}`}>{file.split('/').at(-1)}</a></li>
+              ))}</ul>
+            )}
+            {view === 'evolucion' && (data.fecha || data.estado || data.version_entrega) &&
+              <span> · {[data.fecha, data.estado, data.version_entrega].filter(Boolean).join(' · ')}</span>}
+          </li>
+        ))}
+      </ul>
+    ) : <p>Todavía no hay {view === 'entregas' ? 'archivos publicados' : 'fichas publicadas'}.</p>}
+  </section>
+))}

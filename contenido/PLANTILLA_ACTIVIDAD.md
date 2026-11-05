@@ -1,11 +1,13 @@
 ---
 codigo: "M1U1-A00"
-titulo: "Título de la actividad"
+title: "Título de la actividad"
 modulo: "Módulo 1"
 unidad: "Unidad 1"
 estado: "en progreso" # pendiente | en progreso | completada | revisada
 fecha: "" # AAAA-MM-DD, si se conoce
 version_entrega: "v01"
+publicar: false
+archivos: []
 ---
 
 # Título de la actividad
@@ -23,7 +25,7 @@ Resumen de los pasos realmente realizados, sin inventar datos.
 ¿Qué se ha conseguido? ¿Está pendiente de revisión?
 
 ## Archivos entregados
-- [Archivo original](../../curso/m1/m1u1/entregas/NOMBRE_REAL_DEL_ARCHIVO.txt) <!-- Sustituir por la ruta real -->
+Añade las rutas autorizadas al campo `archivos` de la ficha para mostrarlas en Entregas.
 
 ## Versiones y cambios
 | Versión | Cambio | Fecha |

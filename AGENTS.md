@@ -5,9 +5,9 @@ Desarrollar y mantener MANU.DEV, una web de documentación del curso de Programa
 
 ## Identidad y alcance
 - Nombre: **MANU.DEV — Mi laboratorio de Programación con IA**.
-- Estética: oscura, tecnológica y minimalista. Fondo `#0B1020`, tarjetas `#151D30`, blanco crudo `#F1F0EB`, secundario `#9CA8BD`, azul `#4776FF`, violeta `#9566FF`.
+- Estética: fondo verde oscuro, texto marfil, acentos menta y melocotón. Usar únicamente la identidad propia de MANU.DEV.
 - Navegación: Inicio, Formación, Entregas, Evolución. No crear otras secciones sin aprobación.
-- Stack previsto: Astro + Starlight + Markdown; publicación estática en GitHub Pages mediante GitHub Actions. Aún no está implementado.
+- Stack: Astro + Starlight + Markdown; publicación estática en GitHub Pages mediante GitHub Actions.
 
 ## Reglas obligatorias
 1. Conservar la estructura académica módulo → unidad → actividad y los nombres de entrega del profesor.

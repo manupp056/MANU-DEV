@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "predev": "node scripts/sync-activities.mjs",
+    "prestart": "node scripts/sync-activities.mjs",
     "prebuild": "node scripts/sync-activities.mjs",
     "dev": "astro dev",
     "start": "astro dev",

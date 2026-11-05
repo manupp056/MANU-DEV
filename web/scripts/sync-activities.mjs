@@ -28,7 +28,10 @@ for (const entry of entries) {
 	const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
 	if (!frontmatter || !/^publicar:\s*true\s*$/m.test(frontmatter[1])) continue;
 
-	const safeContent = content.replace(/^publicar:\s*true\s*\r?\n/m, '');
+	const metadata = frontmatter[1]
+		.replace(/^publicar:[ \t]*true[ \t]*\r?\n?/m, '')
+		.replace(/^titulo:/m, /^title:/m.test(frontmatter[1]) ? 'titulo:' : 'title:');
+	const safeContent = `---\n${metadata.trimEnd()}\n---${content.slice(frontmatter[0].length)}`;
 	const target = join(generatedDir, `${basename(entry.name, extname(entry.name))}.md`);
 	await writeFile(target, safeContent, 'utf8');
 	published += 1;
